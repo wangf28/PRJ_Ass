@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/controllers/SearchController.java</file>
-            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/dao/BookDAO.java</file>
-            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/myFillter/RegisFillter.java</file>
-            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/util/DBUtil.java</file>
-            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/controllers/LoadController.java</file>
-            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/dto/Book.java</file>
+            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/controllers/LoginController.java</file>
+            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/PROJECT-OOP/PRJ_Project/web/Login.jsp</file>
+            <file>file:/D:/PROJECT-OOP/PRJ_Project/web/Register.jsp</file>
+            <file>file:/D:/PROJECT-OOP/PRJ_Project/web/UserDashboard.jsp</file>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/controllers/MainController.java</file>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/web/homePage.jsp</file>
         </group>
