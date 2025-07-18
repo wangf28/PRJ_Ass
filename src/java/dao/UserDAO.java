@@ -78,4 +78,42 @@ public class UserDAO {
         }
         return rs;
     }
+    
+    public User getUserByEmailAndPass(String email, String pass){
+        User rs = null;
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            if(cn != null){
+                String sql = "SELECT [id],[name],[email],[password],[role],[status]\n"
+                        + "FROM [dbo].[users]\n"
+                        + "WHERE [email] = ? AND [password] = ?";
+                PreparedStatement st = cn.prepareStatement(sql);
+                st.setString(1, email);
+                st.setString(2, pass);
+                ResultSet table = st.executeQuery();
+                if(table != null){
+                    while(table.next()){
+                        int id = table.getInt("id");
+                        String name = table.getString("name");
+                        String role = table.getString("role");
+                        String status = table.getString("status");
+                        rs = new User(id, name, email, pass, role, status);
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return rs;
+        
+        
+        
+    }
 }
