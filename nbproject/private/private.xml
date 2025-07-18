@@ -5,6 +5,7 @@
         <group>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/controllers/SearchController.java</file>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/dao/BookDAO.java</file>
+            <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/myFillter/RegisFillter.java</file>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/util/DBUtil.java</file>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/controllers/LoadController.java</file>
             <file>file:/D:/PROJECT-OOP/PRJ_Project/src/java/dto/Book.java</file>

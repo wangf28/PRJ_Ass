@@ -103,4 +103,47 @@ public class BookDAO {
         
         return rs;
     }
+    
+    //ham nay lay sách dựa vào id để xem chi tiết
+    public Book getBookById(int id){
+        Book rs = null;
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            if(cn != null){
+                String sql = "SELECT [id],[title],[author],[isbn],[category],[published_year],[total_copies],[available_copies],[status]\n"
+                        + "FROM [dbo].[books]\n"
+                        + "WHERE [id] = ?";
+                PreparedStatement st = cn.prepareStatement(sql);
+                st.setInt(1, id);
+                
+                ResultSet table = st.executeQuery();
+                if(table != null){
+                    while(table.next()){
+                        String title = table.getString("title");
+                        String author = table.getString("author");
+                        String isbn = table.getString("isbn");
+                        String category = table.getString("category");
+                        int published_year = table.getInt("published_year");
+                        int total_copies = table.getInt("total_copies");
+                        int available_copies = table.getInt("available_copies");
+                        String status = table.getString("status");
+                        rs = new Book(id, title, author, isbn, category, published_year, total_copies, available_copies, status);
+                    }
+                }
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
+        return rs;
+    }
 }
