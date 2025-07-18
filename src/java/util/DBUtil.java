@@ -24,4 +24,13 @@ public class DBUtil {
         conn = DriverManager.getConnection(url, DB_USER_NAME, DB_PASSWORD);
         return conn;
     }
+    public static void disconnectionDB(Connection conn){
+        try {
+            if(conn != null && !conn.isClosed()){
+                conn.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error at disconnectionDB"+ e.getMessage());
+        }
+    }
 }
