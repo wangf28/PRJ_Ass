@@ -5,6 +5,10 @@
 
 package controllers;
 
+import dao.BookDAO;
+import dao.UserDAO;
+import dto.Book;
+import dto.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class MainController extends HttpServlet {
+public class BorrowBookController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,48 +34,20 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String url = "LoadController";
-            try {
+            String userid = request.getParameter("userId");
+            int newuserid = Integer.parseInt(userid);
+            String bookid = request.getParameter("bookId");
+            int newbookid = Integer.parseInt(bookid);
+            if(userid != null && bookid != null){
+                UserDAO ud = new UserDAO();
+                BookDAO bd = new BookDAO();
+                User u = ud.getUserById(newuserid);
+                Book b = bd.getBookById(newbookid);
                 
-                String act = request.getParameter("action");
-                if(act == null) act = "home";
-                switch (act) {
-                    case "home":
-                        url = "LoadController";
-                        break;
-                    case "backuserdashboard":
-                        url = "UserDashboard.jsp";
-                        break;
-                    case "Find":
-                        url = "SearchController";
-                        break;
-                    case "searchbook":
-                        url = "SearchBookController";
-                        break;
-                    case "viewdetail":
-                        url = "ViewDetailController";
-                        break;
-                    case "viewdetailuserpage":
-                        url = "ViewDetailForUserController";
-                        break;
-                    case "borrowbook":
-                        url = "BorrowBookController";
-                        break;
-                    case "borrowbook1":
-                        url = "BorrowBookController1";
-                        break;
-                    case "viewborrowrecord":
-                        url = "ViewBorrowRecordController";
-                        break;
-                    case "Login": 
-                        url = "LoginController";
-                        break;
-                    case "logout": 
-                        url = "LogoutController";
-                        break;
-                }
-            } finally {
-                request.getRequestDispatcher(url).forward(request, response);
+                request.setAttribute("user", u);
+                request.setAttribute("book", b);
+                request.getRequestDispatcher("BookBorrowSlip.jsp").forward(request, response);
+                
             }
         }
     } 

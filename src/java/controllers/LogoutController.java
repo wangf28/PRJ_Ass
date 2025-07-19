@@ -11,12 +11,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class MainController extends HttpServlet {
+public class LogoutController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,49 +31,11 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String url = "LoadController";
-            try {
-                
-                String act = request.getParameter("action");
-                if(act == null) act = "home";
-                switch (act) {
-                    case "home":
-                        url = "LoadController";
-                        break;
-                    case "backuserdashboard":
-                        url = "UserDashboard.jsp";
-                        break;
-                    case "Find":
-                        url = "SearchController";
-                        break;
-                    case "searchbook":
-                        url = "SearchBookController";
-                        break;
-                    case "viewdetail":
-                        url = "ViewDetailController";
-                        break;
-                    case "viewdetailuserpage":
-                        url = "ViewDetailForUserController";
-                        break;
-                    case "borrowbook":
-                        url = "BorrowBookController";
-                        break;
-                    case "borrowbook1":
-                        url = "BorrowBookController1";
-                        break;
-                    case "viewborrowrecord":
-                        url = "ViewBorrowRecordController";
-                        break;
-                    case "Login": 
-                        url = "LoginController";
-                        break;
-                    case "logout": 
-                        url = "LogoutController";
-                        break;
-                }
-            } finally {
-                request.getRequestDispatcher(url).forward(request, response);
+            HttpSession s = request.getSession(false);
+            if(s != null){
+                s.invalidate();
             }
+            response.sendRedirect("MainController");
         }
     } 
 
