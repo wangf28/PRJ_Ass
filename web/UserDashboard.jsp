@@ -186,6 +186,27 @@
         font-family: Arial, sans-serif;
         text-align: center;
     }
+    
+    .Change-profile{
+        position: absolute;
+        top: 20px;
+        left: 30px;
+    }
+    
+    .Change-profile input[type="submit"] {
+        padding: 8px 16px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .logout-wrapper input[type="submit"]:hover {
+        background-color: #c0392b;
+    }
 </style>
 
     </head>
@@ -201,6 +222,13 @@
             }else{
         %>
         <h1>HELLO: ${sessionScope.USERSESSION.name}</h1>
+        
+        <div class="Change-profile">
+            <form action="MainController" method="post">
+                <input type="hidden" name="action" value="Change Profile"/>
+                <input type="submit" value="Change Profile"/>
+            </form>
+        </div>
         
         <div class="logout-wrapper">
             <form action="MainController" method="post">
@@ -246,7 +274,6 @@
                            </c:forEach>
                        </div>
 
-            
                        <!--form xem lịch sử mượn sách-->
                        <div class="history-form">
                            <form action="MainController" method="post">
