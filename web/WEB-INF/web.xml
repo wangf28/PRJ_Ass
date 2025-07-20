@@ -28,6 +28,34 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controllers.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controllers.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchBookController</servlet-name>
+        <servlet-class>controllers.SearchBookController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailForUserController</servlet-name>
+        <servlet-class>controllers.ViewDetailForUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BorrowBookController</servlet-name>
+        <servlet-class>controllers.BorrowBookController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BorrowBookController1</servlet-name>
+        <servlet-class>controllers.BorrowBookController1</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewBorrowRecordController</servlet-name>
+        <servlet-class>controllers.ViewBorrowRecordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controllers.LogoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -47,6 +75,34 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/RegisterController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBookController</servlet-name>
+        <url-pattern>/SearchBookController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailForUserController</servlet-name>
+        <url-pattern>/ViewDetailForUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrowBookController</servlet-name>
+        <url-pattern>/BorrowBookController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrowBookController1</servlet-name>
+        <url-pattern>/BorrowBookController1</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewBorrowRecordController</servlet-name>
+        <url-pattern>/ViewBorrowRecordController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/LogoutController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

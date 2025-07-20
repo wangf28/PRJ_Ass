@@ -73,7 +73,109 @@ h1 {
 .header h1 a {
     text-decoration: none;
 }
+.booklist-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 20px;
+    }
 
+    /* Card từng quyển sách */
+    .book-card {
+        background-color: #ffffff;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        width: 240px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease;
+    }
+
+    .book-card:hover {
+        transform: scale(1.02);
+    }
+
+    .book-card p {
+        margin: 6px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .book-card p strong {
+        color: #2c3e50;
+    }
+
+    /* Nút View Detail */
+    .book-card form button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .book-card form button:hover {
+        background-color: #0056b3;
+    }
+    .search-results {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    /* Mỗi card sách */
+    .book-item {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 16px;
+        width: 240px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease;
+    }
+
+    .book-item:hover {
+        transform: scale(1.02);
+    }
+
+    .book-item p {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .book-item p strong {
+        color: #2c3e50;
+    }
+
+    /* Nút View Detail */
+    .book-item button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .book-item button:hover {
+        background-color: #0056b3;
+    }
+
+    .book-item form {
+        text-align: center;
+        margin-top: 10px;
+    }
         </style>
     </head>
     <body>
@@ -89,108 +191,43 @@ h1 {
             </div>
         </div>
         
-                    <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+                    <div class="booklist-container">
                         <c:forEach var="book" items="${booklist}">
-                            <div style="
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 16px;
-            width: 220px;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-            background-color: #f9f9f9;
-                                 ">
+                            <div class="book-card">
                                 <p><strong>Title:</strong> ${book.title}</p>
                                 <p><strong>Author:</strong> ${book.author}</p>
 
                                 <div style="margin-top: 12px; display: flex; gap: 8px;">
                                     <form action="MainController" method="get">
                                         <input type="hidden" name="bookId" value="${book.id}" />
-                                        <button type="submit" style="
-                        padding: 6px 12px;
-                        background-color: #007bff;
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;
-                        " name="action" value="viewdetail">View Detail</button>
-                                    </form>
+                                        <button type="submit" name="action" value="viewdetail">View Detail</button>
+                                    </form>   
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
 
-                                    <form action="borrowBook" method="post">
-                                        <input type="hidden" name="bookId" value="${book.id}" />
-                                        <button type="submit" style="
-                        padding: 6px 12px;
-                        background-color: #28a745;
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;
-                                                ">Borrow</button>
+
+        
+                    <!-- khi ấn tìm kiếm sẽ hiển thị ở đây -->
+                    <div class="search-results">
+                        <c:forEach var="b" items="${blsearch}">
+                            <div class="book-item">
+                                <p><strong>📖 Title:</strong> ${b.title}</p>
+                                <p><strong>✍️ Author:</strong> ${b.author}</p>
+
+                                <div>
+                                    <form action="MainController" method="post" style="margin: 0;">
+                                        <input type="hidden" name="action" value="viewdetail" />
+                                        <input type="hidden" name="keysearch" value="${param.txtbook}"/>
+                                        <input type="hidden" name="bookId" value="${b.id}" />
+                                        <button type="submit">View Detail</button>
                                     </form>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
 
-        
-        <!--khi an tim kiem se hien thi o day-->
-        <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
-            <c:forEach var="b" items="${blsearch}">
-                <div style="
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 16px;
-            width: 240px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            background-color: #f9f9f9;
-            transition: transform 0.2s ease;
-                     " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-
-                    <p style="margin: 0 0 8px 0;"><strong>📖 Title:</strong> ${b.title}</p>
-                    <p style="margin: 0 0 12px 0;"><strong>✍️ Author:</strong> ${b.author}</p>
-
-                    <div style="display: flex; justify-content: space-between; gap: 6px;">
-                        <!-- Nút View Detail -->
-                        <form action="MainController" method="post" style="margin: 0;">
-                            <input type="hidden" name="action" value="viewdetail" />
-                            <input type="hidden" name="keysearch" value="${param.txtbook}"/>
-                            <input type="hidden" name="bookId" value="${b.id}" />
-                            <button type="submit" style="
-                        flex: 1;
-                        padding: 6px;
-                        background-color: #007bff;
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                        font-size: 13px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                                    " onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">
-                                View Detail
-                            </button>
-                        </form>
-
-                        <!-- Nút Borrow -->
-                        <form action="MainController" method="post" style="margin: 0;">
-                            <input type="hidden" name="action" value="borrowBook" />
-                            <input type="hidden" name="bookId" value="${b.id}" />
-                            <button type="submit" style="
-                        flex: 1;
-                        padding: 6px;
-                        background-color: #28a745;
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                        font-size: 13px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                                    " onmouseover="this.style.backgroundColor='#1e7e34'" onmouseout="this.style.backgroundColor='#28a745'">
-                                Borrow
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
 
 
         <c:set var="msg" value="${msg}" />

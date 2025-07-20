@@ -22,93 +22,114 @@
     h1 {
         text-align: center;
         margin-top: 40px;
+        font-size: 32px;
     }
 
-    .form-container {
+    .form-wrapper {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        margin-top: 20px;
+        justify-content: center;
+        padding-top: 20px;
     }
 
-    form {
+    .form-container,
+    .back-form,
+    .message-box {
         background-color: white;
-        padding: 24px 32px;
+        padding: 20px 30px;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        width: 300px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 320px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
     }
 
-    form p {
-        margin-bottom: 16px;
+    .form-container p {
+        margin: 10px 0;
     }
 
-    form input[type="text"],
-    form input[type="password"] {
+    input[type="text"],
+    input[type="password"] {
         width: 100%;
         padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        margin-top: 5px;
+        box-sizing: border-box;
     }
 
-    form input[type="submit"] {
+    input[type="submit"] {
         width: 100%;
         padding: 10px;
         background-color: #007bff;
-        color: white;
         border: none;
         border-radius: 4px;
+        color: white;
+        font-weight: bold;
         cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
-    form input[type="submit"]:hover {
+    input[type="submit"]:hover {
         background-color: #0056b3;
     }
+
     .message-box {
-    width: 300px;
-    margin: 16px auto;
-    padding: 12px;
-    border-radius: 4px;
-    text-align: center;
-    font-weight: bold;
-}
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+    }
 
-.message-error {
-    background-color: #ffe5e5;
-    color: #cc0000;
-    border: 1px solid #cc0000;
-}
+    .message-error {
+        background-color: #f8d7da;
+        border: 1px solid #dc3545;
+        color: #721c24;
+    }
 
-.message-success {
-    background-color: #e6ffe6;
-    color: #006600;
-    border: 1px solid #006600;
-}
+    .message-success {
+        background-color: #d4edda;
+        border: 1px solid #28a745;
+        color: #155724;
+    }
 
+
+    
         </style>
     </head>
     <body>
         <h1>Register</h1>
+        <div class="form-wrapper">
+        <!-- Form đăng ký -->
         <div class="form-container">
             <form action="RegisterController" method="post">
                 <p>Name: <input type="text" name="txtname" placeholder="Enter your name"/></p>
                 <p>Email: <input type="text" name="txtemail" placeholder="Enter your email"/></p>
-                <p>Password: <input type="text" name="txtpassword" placeholder="Enter your password"/></p>
-                <p>Confirm password: <input type="text" name="txtconfirmpassword" placeholder="Confirm password"/></p>
-                <p><input type="submit" value="Register"/></p>
+                <p>Password: <input type="password" name="txtpassword" placeholder="Enter your password"/></p>
+                <p>Confirm password: <input type="password" name="txtconfirmpassword" placeholder="Confirm password"/></p>
+                <p><input type="submit" value="Register"/></p>   
             </form>
         </div>
-    <c:if test="${not empty requestScope.error}">
-        <div class="message-box message-error">
-            ${requestScope.error}
-        </div>
-    </c:if>
 
-    <c:if test="${not empty requestScope.msg}">
-        <div class="message-box message-success">
-            ${requestScope.msg}
+        <!-- Nút Back -->
+        <div class="back-form">
+            <form accept-charset="utf-8" method="post" action="MainController">
+                <input type="hidden" name="action" value="home"/>
+                <input type="submit" value="Back"/>
+            </form>
         </div>
-    </c:if>
+
+        <!-- Thông báo lỗi/thành công -->
+        <c:if test="${not empty requestScope.error}">
+            <div class="message-box message-error">
+                ${requestScope.error}
+            </div>
+        </c:if>
+
+        <c:if test="${not empty requestScope.msg}">
+            <div class="message-box message-success">
+                ${requestScope.msg}
+            </div>
+        </c:if>
+    </div>
 
     </body>
 </html>

@@ -5,10 +5,13 @@
 package dao;
 
 import dto.Book;
+import dto.BookBorrowRecord;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import util.DBUtil;
 
 /**
@@ -143,6 +146,84 @@ public class BookDAO {
             }
         }
         
+        
+        return rs;
+    }
+    
+    //hàm này thêm request mu?n sách vào DB
+    public int InsertRequest(int userid, int bookid, String requestDate){
+        int rs = 0;
+        
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = df.parse(requestDate);
+            
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            
+            if(cn != null){
+                String sql = "INSERT INTO [dbo].[book_requests] ([user_id],[book_id],[request_date],[status]) VALUES (?,?,?,?)"; 
+                PreparedStatement st = cn.prepareStatement(sql);
+                st.setInt(1, userid);
+                st.setInt(2, bookid);
+                st.setDate(3, sqlDate);
+                st.setString(4, "pending");
+                rs = st.executeUpdate();
+                
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
+        return rs;
+    }
+    
+    //ham nay lay lich su muon sach dua vao id
+    public ArrayList<BookBorrowRecord> getBBRById(int userid){
+        ArrayList<BookBorrowRecord> rs = new ArrayList<>();
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            if(cn != null){
+                String sql = "SELECT A.[id],A.[user_id], A.[book_id],A.[borrow_date],A.[due_date],A.[return_date],A.[status], B.title, B.author\n"
+                        + "  FROM [dbo].[borrow_records] A JOIN [dbo].[books] B ON A.book_id = B.id\n"
+                        + "  WHERE A.user_id = ?";
+                PreparedStatement st = cn.prepareStatement(sql);
+                st.setInt(1, userid);
+                ResultSet table = st.executeQuery();
+                if(table != null){
+                    while(table.next()){
+                        int brid = table.getInt("id");
+                        int bookid = table.getInt("book_id");
+                        Date borrow_date = table.getDate("borrow_date");
+                        Date due_date = table.getDate("due_date");
+                        Date return_date = table.getDate("return_date");
+                        String status = table.getString("status");
+                        String booktitle = table.getString("title");
+                        String bookauthor = table.getString("author");
+                        rs.add(new BookBorrowRecord(brid, userid, bookid, borrow_date, due_date, return_date, status, booktitle, bookauthor));
+                    }
+                }
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         
         return rs;
     }
