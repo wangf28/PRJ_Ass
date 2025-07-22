@@ -114,8 +114,8 @@
         
         <!-- Nút Back -->
         <div class="back-form">
-            <form accept-charset="utf-8" method="post" action="MainController">
-                <input type="hidden" name="action" value="home"/>
+            <form action="MainController">
+                <input type="hidden" name="action" value="backuserdashboard"/>
                 <input type="submit" value="Back"/>
             </form>
         </div>
@@ -131,6 +131,7 @@
             <div class="message-box message-success">
                 ${requestScope.msg}
             </div>
+            <% response.sendRedirect("MainController"); %>
         </c:if>
     </div>
 
