@@ -71,8 +71,6 @@ public class ChangeController extends HttpServlet {
             
         } catch (Exception e) {
             e.getMessage();
-        }finally{
-            response.sendRedirect("home.jsp");
         }
     } 
 
