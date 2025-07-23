@@ -15,10 +15,23 @@ public class BookRequest {
     private int book_id;
     private Date request_date;
     private String status;
-
+    private String booktitle;
+    
+    
+    
     public BookRequest() {
     }
 
+    public BookRequest(int user_id, int book_id, Date request_date, String status, String booktitle) {
+        this.user_id = user_id;
+        this.book_id = book_id;
+        this.request_date = request_date;
+        this.status = status;
+        this.booktitle = booktitle;
+    }
+
+    
+    
     public BookRequest(int user_id, int book_id, Date request_date, String status) {
         this.user_id = user_id;
         this.book_id = book_id;
@@ -56,6 +69,14 @@ public class BookRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getBooktitle() {
+        return booktitle;
+    }
+
+    public void setBooktitle(String booktitle) {
+        this.booktitle = booktitle;
     }
     
     

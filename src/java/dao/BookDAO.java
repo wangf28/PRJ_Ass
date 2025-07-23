@@ -6,6 +6,7 @@ package dao;
 
 import dto.Book;
 import dto.BookBorrowRecord;
+import dto.BookRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -182,6 +183,47 @@ public class BookDAO {
                 e.printStackTrace();
             }
         }
+        
+        
+        return rs;
+    }
+    
+    //ham nay lay du lieu muon sach dua vao userid
+    public ArrayList<BookRequest> getBookRequest(int userid){
+        ArrayList<BookRequest> rs = new ArrayList<>();
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            if(cn != null){
+                String sql = " SELECT [user_id],[book_id],[request_date],A.[status], B.title\n"
+                        + "  FROM [dbo].[book_requests] A JOIN [dbo].[books] B ON A. book_id = B.id\n"
+                        + "  WHERE A.user_id = ?";
+                PreparedStatement st = cn.prepareStatement(sql);
+                st.setInt(1, userid);
+                
+                ResultSet table = st.executeQuery();
+                if(table != null){
+                    while(table.next()){
+                        int bookid = table.getInt("book_id");
+                        Date requestDate = table.getDate("request_date");
+                        String status = table.getString("status");
+                        String bookTitle = table.getString("title");
+                        rs.add(new BookRequest(userid, bookid, requestDate, status, bookTitle));
+                    }
+                }
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
         
         
         return rs;

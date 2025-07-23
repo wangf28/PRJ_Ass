@@ -207,6 +207,35 @@
     .logout-wrapper input[type="submit"]:hover {
         background-color: #c0392b;
     }
+    .view-request-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .view-request-container form {
+        background-color: #ffffff;
+        
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .view-request-container input[type="submit"] {
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .view-request-container input[type="submit"]:hover {
+        background-color: #1abc9c;
+    }
 </style>
 
     </head>
@@ -273,7 +302,17 @@
                                </div>
                            </c:forEach>
                        </div>
+                       
+                       <!-- Xem yêu cầu mượn sách -->
+                       <div class="view-request-container">
+                           <form action="MainController" method="post">
+                               <input type="hidden" name="userid" value="${sessionScope.USERSESSION.id}"/>
+                               <input type="hidden" name="action" value="viewborrowrequest"/>
+                               <input type="submit" value="VIEW BORROW REQUEST"/>
+                           </form>
+                       </div>
 
+                       
                        <!--form xem lịch sử mượn sách-->
                        <div class="history-form">
                            <form action="MainController" method="post">
