@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="dto.User" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -96,23 +98,24 @@
         </style>
     </head>
     <body>
-        <h1>Register</h1>
+        
+        <h1>New Profile</h1>
         <div class="form-wrapper">
         <!-- Form đăng ký -->
         <div class="form-container">
-            <form action="RegisterController" method="post">
-                <p>Name: <input type="text" name="txtname" placeholder="Enter your name" required=""/></p>
-                <p>Email: <input type="text" name="txtemail" placeholder="Enter your email" required=""/></p>
-                <p>Password: <input type="password" name="txtpassword" placeholder="Enter your password" required=""/></p>
-                <p>Confirm password: <input type="password" name="txtconfirmpassword" placeholder="Confirm password" required=""/></p>
-                <p><input type="submit" value="Register"/></p>   
+            <form action="ChangeController" method="post">
+                <p>Name: <input type="text" name="txtname" placeholder="Enter your name"/></p>
+                <p>Email: <input type="text" name="txtemail" placeholder="Enter your email"/></p>
+                <p>Password: <input type="password" name="txtpassword" placeholder="Enter your password"/></p>
+                <p>Confirm password: <input type="password" name="txtconfirmpassword" placeholder="Confirm password"/></p>
+                <p><input type="submit" value="Confirm"/></p> 
             </form>
         </div>
-
+        
         <!-- Nút Back -->
         <div class="back-form">
-            <form accept-charset="utf-8" method="post" action="MainController">
-                <input type="hidden" name="action" value="home"/>
+            <form action="MainController">
+                <input type="hidden" name="action" value="backuserdashboard"/>
                 <input type="submit" value="Back"/>
             </form>
         </div>
@@ -128,6 +131,7 @@
             <div class="message-box message-success">
                 ${requestScope.msg}
             </div>
+            <% response.sendRedirect("MainController"); %>
         </c:if>
     </div>
 

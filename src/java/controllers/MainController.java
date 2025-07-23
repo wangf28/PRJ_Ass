@@ -69,6 +69,9 @@ public class MainController extends HttpServlet {
                     case "logout": 
                         url = "LogoutController";
                         break;
+                    case "Change Profile":
+                        url ="ChangeProfile.jsp";
+                        break;
                 }
             } finally {
                 request.getRequestDispatcher(url).forward(request, response);

@@ -15,6 +15,11 @@ import util.DBUtil;
  * @author ASUS
  */
 public class UserDAO {
+    
+    public static UserDAO getInstance(){
+        return new UserDAO();
+    }
+    
     //hàm này thêm người dùng mới vào
     public int AddNewUser(String name, String email, String password){
         int rs = 0;
@@ -41,6 +46,35 @@ public class UserDAO {
             }
         }
         
+        return rs;
+    }
+    
+    public int updateUser(User user, String name, String email, String pass){
+        int rs = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtil.getConnection();
+            String sql = "UPDATE users "+
+                        "SET "+
+                        "name=?,\n"+
+                        "email=?,\n"+
+                        "password=?\n"+
+                        "WHERE id=?;\n";
+            PreparedStatement st = cn.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, email);
+            st.setString(3, pass);
+            st.setInt(4, user.getId());
+            rs=st.executeUpdate();
+        } catch (Exception e) {
+            e.getMessage();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return rs;
     }
     
@@ -150,6 +184,5 @@ public class UserDAO {
             }
         }
         return rs;
-        
     }
 }
