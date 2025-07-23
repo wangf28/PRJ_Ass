@@ -114,8 +114,13 @@
         
         <!-- Nút Back -->
         <div class="back-form">
+<<<<<<< HEAD
             <form accept-charset="utf-8" method="post" action="UserDashboard.jsp">
                 <input type="hidden" name="action" value="home"/>
+=======
+            <form action="MainController">
+                <input type="hidden" name="action" value="backuserdashboard"/>
+>>>>>>> e4ac1236ff4ed0dde2891396dee0ce3c3ee9fedd
                 <input type="submit" value="Back"/>
             </form>
         </div>

@@ -101,10 +101,10 @@
         <!-- Form đăng ký -->
         <div class="form-container">
             <form action="RegisterController" method="post">
-                <p>Name: <input type="text" name="txtname" placeholder="Enter your name"/></p>
-                <p>Email: <input type="text" name="txtemail" placeholder="Enter your email"/></p>
-                <p>Password: <input type="password" name="txtpassword" placeholder="Enter your password"/></p>
-                <p>Confirm password: <input type="password" name="txtconfirmpassword" placeholder="Confirm password"/></p>
+                <p>Name: <input type="text" name="txtname" placeholder="Enter your name" required=""/></p>
+                <p>Email: <input type="text" name="txtemail" placeholder="Enter your email" required=""/></p>
+                <p>Password: <input type="password" name="txtpassword" placeholder="Enter your password" required=""/></p>
+                <p>Confirm password: <input type="password" name="txtconfirmpassword" placeholder="Confirm password" required=""/></p>
                 <p><input type="submit" value="Register"/></p>   
             </form>
         </div>

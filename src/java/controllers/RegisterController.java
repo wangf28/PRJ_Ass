@@ -33,9 +33,9 @@ public class RegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String name = request.getParameter("txtname");
-            String email = request.getParameter("txtemail");
-            String pass = request.getParameter("txtpassword");
+            String name = request.getParameter("txtname").trim();
+            String email = request.getParameter("txtemail").trim();
+            String pass = request.getParameter("txtpassword").trim();
             
             
             UserDAO ud = new UserDAO();
