@@ -45,42 +45,7 @@
     .logout-wrapper input[type="submit"]:hover {
         background-color: #c0392b;
     }
-    .search-form {
-        text-align: center;
-        margin-bottom: 30px;
-        margin-top: 20px;
-    }
-
-    .search-form input[type="text"] {
-        padding: 10px 16px;
-        width: 280px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 14px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .search-form input[type="text"]:focus {
-        border-color: #3498db;
-        box-shadow: 0 0 6px rgba(52, 152, 219, 0.4);
-        outline: none;
-    }
-
-    .search-form input[type="submit"] {
-        padding: 10px 20px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        margin-left: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .search-form input[type="submit"]:hover {
-        background-color: #2c80b4;
-    }
+    
     .book-list {
         display: flex;
         flex-wrap: wrap;
@@ -113,7 +78,7 @@
     .book-card p strong {
         color: #2c3e50;
     }
-
+    
     /* Nhóm nút */
     .button-group {
         display: flex;
@@ -154,26 +119,7 @@
     .button-group button:last-child:hover {
         background-color: #1e7e34;
     }
-    .history-form {
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .history-form input[type="submit"] {
-        padding: 10px 20px;
-        background-color: #6c757d;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .history-form input[type="submit"]:hover {
-        background-color: #5a6268;
-    }
+    
     .alert-message {
         max-width: 600px;
         margin: 20px auto;
@@ -207,6 +153,32 @@
     .logout-wrapper input[type="submit"]:hover {
         background-color: #c0392b;
     }
+    /*Menu*/
+    .menu-bar {
+            background-color: #007bff;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-bar input {
+            color: white;
+            border: none;
+            background: none;
+            padding: 14px 20px;
+            font-size: 15x;
+            font-weight: bold;
+            display: block;
+        }
+
+        .menu-bar input:hover {
+            background-color: white;
+            color: black;
+            font-weight: bold;
+        }
+        
+    /*Menu*/
+    
 </style>
 
     </head>
@@ -216,12 +188,12 @@
        
         <% 
             HttpSession s = request.getSession();
-            User u = (User) s.getAttribute("USERSESSION");
+            User u = (User) s.getAttribute("ADMINSESSION");
             if(u == null){
                 response.sendRedirect("MainController");
             }else{
         %>
-        <h1>HELLO: ${sessionScope.USERSESSION.name}</h1>
+        <h1>HELLO: ${sessionScope.ADMINSESSION.name}</h1>
         
         <div class="Change-profile">
             <form action="MainController" method="post">
@@ -237,61 +209,40 @@
             </form>
         </div>
                 
-        <div class="search-form">
-            <form action="MainController">
-                <input type="hidden" name="action" value="searchbook"/>
-                <input type="text" name="txtbook" placeholder="Search book" 
-                       value="${empty param.txtbook ? '' : param.txtbook}"/>
-                <input type="submit" value="Find"/>
+        <!-- Menu admin -->
+        <div class="menu-bar">
+            <form action="ViewBookOverdueController" method="post">
+                <input type="submit" value="View Books Overdue"/>
+            </form>
+            <form action="statisc.page" method="post">
+                <input type="submit" value="statisc"/>
             </form>
         </div>
-
-                       <!-- danh sách sách -->
-                        <div class="book-list">
-                           <c:forEach var="b" items="${blsearch}">
-                               <div class="book-card">
-                                   <p><strong>📖 Title:</strong> ${b.title}</p>
-                                   <p><strong>✍️ Author:</strong> ${b.author}</p>
-
-                                   <div class="button-group">
-                                       <!-- View Detail -->
-                                       <form action="MainController" method="post">
-                                           <input type="hidden" name="action" value="viewdetailuserpage" />
-                                           <input type="hidden" name="keysearch" value="${param.txtbook}"/>
-                                           <input type="hidden" name="bookId" value="${b.id}" />
-                                           <button type="submit">View Detail</button>
-                                       </form>
-
-                                       <!-- Borrow -->
-                                       <form action="MainController" method="post">
-                                           <input type="hidden" name="action" value="borrowbook" />
-                                           <input type="hidden" name="userId" value="${sessionScope.USERSESSION.id}"/>
-                                           <input type="hidden" name="bookId" value="${b.id}" />
-                                           <button type="submit">Borrow</button>
-                                       </form>
-                                   </div>
-                               </div>
-                           </c:forEach>
-                       </div>
-
-                       <!--form xem lịch sử mượn sách-->
-                       <div class="history-form">
-                           <form action="MainController" method="post">
-                               <input type="hidden" name="action" value="viewborrowrecord"/>
-                               <input type="hidden" name="userid" value="${sessionScope.USERSESSION.id}"/>
-                               <input type="submit" value="Xem lịch sử mượn sách"/>
-                           </form>
-                       </div>
-
-            
-            
-            
-            <!--thong bao yeu cau muon sach-->
-            <c:if test="${not empty requestScope.thongbao}">
-                <div class="alert-message">
-                    <p>${requestScope.thongbao}</p>
+        <!-- Menu admin -->
+        <!-- List Book overdue -->
+        <div class="book-list">
+            <c:forEach var="b" items="${requestScope.bList}">
+                <div class="book-card">
+                    <p><strong>📖 Title:</strong> ${b.getBooktitle()}</p>
+                    <p><strong>✍️ Author:</strong> ${b.getBookauthor()}</p>
+                    <div class="button-group">
+                        <!-- View Detail -->
+                        <form action="MainController" method="post">
+                            <input type="hidden" name="action" value="viewbookoverdue" />
+                            <input type="hidden" name="userId" value="${b.getUserid()}"/>
+                            <input type="hidden" name="id" value="${b.getId()}" />
+                            <button type="submit">View Detail</button>
+                        </form>
+                    </div>
                 </div>
-            </c:if>
+            </c:forEach>
+        </div>
+        
+        <c:if test="${not empty requestScope.msg}">
+            <div class="alert-message">
+                <p>${requestScope.msg}</p>
+            </div>
+        </c:if>
         <%
             }
         %>

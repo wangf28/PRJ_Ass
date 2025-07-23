@@ -70,7 +70,10 @@ public class MainController extends HttpServlet {
                         url = "LogoutController";
                         break;
                     case "Change Profile":
-                        url ="ChangeProfile.jsp";
+                        url = "ChangeProfile.jsp";
+                        break;
+                    case "viewbookoverdue":
+                        url = "ViewBookOverdueForAdmin";
                         break;
                 }
             } finally {

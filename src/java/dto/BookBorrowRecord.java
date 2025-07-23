@@ -13,6 +13,7 @@ import java.util.Date;
 public class BookBorrowRecord {
     private int id;
     private int userid;
+    private String name;
     private int bookid;
     private Date borrow_date;
     private Date due_date;
@@ -25,6 +26,20 @@ public class BookBorrowRecord {
     public BookBorrowRecord() {
     }
 
+    public BookBorrowRecord(int id, int userid, String name, int bookid, Date borrow_date, Date due_date, Date return_date, String status, String booktitle, String bookauthor) {
+        this.id = id;
+        this.userid = userid;
+        this.name = name;
+        this.bookid = bookid;
+        this.borrow_date = borrow_date;
+        this.due_date = due_date;
+        this.return_date = return_date;
+        this.status = status;
+        this.booktitle = booktitle;
+        this.bookauthor = bookauthor;
+    }
+    
+
     public BookBorrowRecord(int id, int userid, int bookid, Date borrow_date, Date due_date, Date return_date, String status, String booktitle, String bookauthor) {
         this.id = id;
         this.userid = userid;
@@ -36,29 +51,8 @@ public class BookBorrowRecord {
         this.booktitle = booktitle;
         this.bookauthor = bookauthor;
     }
-
+  
     
-    
-    public String getBooktitle() {
-        return booktitle;
-    }
-
-    public void setBooktitle(String booktitle) {
-        this.booktitle = booktitle;
-    }
-
-    public String getBookauthor() {
-        return bookauthor;
-    }
-
-    public void setBookauthor(String bookauthor) {
-        this.bookauthor = bookauthor;
-    }
-
-    
-
-   
-
     public int getId() {
         return id;
     }
@@ -67,9 +61,6 @@ public class BookBorrowRecord {
         this.id = id;
     }
 
-    
-    
-    
     public int getUserid() {
         return userid;
     }
@@ -78,6 +69,14 @@ public class BookBorrowRecord {
         this.userid = userid;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public int getBookid() {
         return bookid;
     }
@@ -117,6 +116,21 @@ public class BookBorrowRecord {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
+    public String getBooktitle() {
+        return booktitle;
+    }
+
+    public void setBooktitle(String booktitle) {
+        this.booktitle = booktitle;
+    }
+
+    public String getBookauthor() {
+        return bookauthor;
+    }
+
+    public void setBookauthor(String bookauthor) {
+        this.bookauthor = bookauthor;
+    }
     
 }

@@ -19,6 +19,11 @@ import util.DBUtil;
  * @author Admin
  */
 public class BookDAO {
+    
+    public static BookDAO getInstance(){
+        return new BookDAO();
+    }
+    
     public ArrayList<Book> getAllBook(){
         ArrayList<Book> rs = new ArrayList<>();
         Connection cn = null;
@@ -187,6 +192,44 @@ public class BookDAO {
         return rs;
     }
     
+    public BookBorrowRecord getBBRByID(int id){
+        BookBorrowRecord bbr = null;
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            if(cn != null){
+                String sql = "SELECT A.[id],A.[user_id], A.[book_id],A.[borrow_date],A.[due_date],A.[return_date],A.[status], B.title, B.author\n"
+                        + "  FROM [dbo].[borrow_records] A JOIN [dbo].[books] B ON A.book_id = B.id\n"
+                        + "  WHERE A.id = ?";
+                PreparedStatement st = cn.prepareStatement(sql);
+                st.setInt(1, id);
+                ResultSet table = st.executeQuery();
+                if(table != null){
+                    while(table.next()){
+                        int bookid = table.getInt("book_id");
+                        int userid = table.getInt("user_id");
+                        Date borrow_date = table.getDate("borrow_date");
+                        Date due_date = table.getDate("due_date");
+                        Date return_date = table.getDate("return_date");
+                        String status = table.getString("status");
+                        String booktitle = table.getString("title");
+                        String bookauthor = table.getString("author");
+                        bbr = new BookBorrowRecord(id, userid, bookid, borrow_date, due_date, return_date, status, booktitle, bookauthor);
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return bbr;
+    }
+    
     //ham nay lay lich su muon sach dua vao id
     public ArrayList<BookBorrowRecord> getBBRById(int userid){
         ArrayList<BookBorrowRecord> rs = new ArrayList<>();
@@ -227,4 +270,48 @@ public class BookDAO {
         
         return rs;
     }
+    
+    public ArrayList<BookBorrowRecord> getBBRBOverdue(){
+        ArrayList<BookBorrowRecord> rs = new ArrayList<>();
+        Connection cn = null;
+        try{
+            cn = DBUtil.getConnection();
+            if(cn != null){
+                String sql = "SELECT A.[id],A.[user_id], A.[book_id],A.[borrow_date],A.[due_date],A.[return_date],A.[status], B.title, B.author, C.name\n"
+                        + "  FROM [dbo].[borrow_records] A "
+                        + "JOIN [dbo].[books] B ON A.book_id = B.id\n"
+                        + "JOIN [dbo].[users] C on A.user_id = C.id\n"
+                        + "WHERE A.status = 'overdue'";
+                PreparedStatement st = cn.prepareStatement(sql);
+                ResultSet table = st.executeQuery();
+                if(table != null){
+                    while(table.next()){
+                        int brid = table.getInt("id");
+                        int userid = table.getInt("user_id");
+                        String name = table.getString("name");
+                        int bookid = table.getInt("book_id");
+                        Date borrow_date = table.getDate("borrow_date");
+                        Date due_date = table.getDate("due_date");
+                        Date return_date = table.getDate("return_date");
+                        String status = table.getString("status");
+                        String booktitle = table.getString("title");
+                        String bookauthor = table.getString("author");
+                        rs.add(new BookBorrowRecord(brid, userid, name, bookid, borrow_date, due_date, return_date, status, booktitle, bookauthor));
+                    }
+                }
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                if(cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return rs;
+    }
+        
 }

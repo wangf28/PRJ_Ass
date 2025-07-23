@@ -5,21 +5,22 @@
 
 package controllers;
 
-import dao.UserDAO;
-import dto.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
+import dao.*;
+import dto.User;
+import dto.BookBorrowRecord;
 /**
  *
- * @author Admin
+ * @author LENOVO
  */
-public class LoginController extends HttpServlet {
+@WebServlet(name="ViewBookOverdueForAdmin", urlPatterns={"/ViewBookOverdueForAdmin"})
+public class ViewBookOverdueForAdmin extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,39 +32,13 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("txtemail");
-            String pass = request.getParameter("txtpassword");
-            
-            if(email == null && email.isEmpty() && pass == null && pass.isEmpty()){
-                request.setAttribute("msg", "vui long nhap email va mat khau!");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }else{
-                UserDAO ud = new UserDAO();
-                User u = ud.getUserByEmailAndPass(email, pass);
-                if(u != null){
-                    if(u.getStatus().equals("blocked")){
-                        request.setAttribute("msg", "Tai khoan da bi cam");
-                        request.getRequestDispatcher("Login.jsp").forward(request, response);
-                    }else{
-                        HttpSession s = request.getSession();
-                        if(u.getRole().equals("user")){
-                            s.setAttribute("USERSESSION", u);
-                            request.getRequestDispatcher("UserDashboard.jsp").forward(request, response);
-                        }else if(u.getRole().equals("admin")){
-                            s.setAttribute("ADMINSESSION", u);
-                            request.getRequestDispatcher("Admin.jsp").forward(request, response);
-                        }
-                    }
-                }else{
-                    request.setAttribute("msg", "Sai email hoac mat khau");
-                    request.getRequestDispatcher("Login.jsp").forward(request, response);
-                    
-                }
-                
-            }
-        }
+        int user_id= Integer.parseInt(request.getParameter("userId"));
+        int id= Integer.parseInt(request.getParameter("id"));
+        User user = UserDAO.getInstance().getUserById(user_id);
+        BookBorrowRecord bbr = BookDAO.getInstance().getBBRByID(id);
+        request.setAttribute("userDetail", user);
+        request.setAttribute("borrowDetail", bbr);
+        request.getRequestDispatcher("viewBookOverdueForAdmin.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,8 +50,12 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+    //DO NOT DELETE
+        PrintWriter out = response.getWriter();
+        response.setCharacterEncoding("utf-8");
         processRequest(request, response);
     } 
 
@@ -90,6 +69,9 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+    //DO NOT DELETE
+        PrintWriter out = response.getWriter();
+        response.setCharacterEncoding("utf-8");
         processRequest(request, response);
     }
 

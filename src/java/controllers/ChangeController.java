@@ -47,7 +47,7 @@ public class ChangeController extends HttpServlet {
                 request.getRequestDispatcher("ChangeProfile.jsp").forward(request, response);
             }
             User checkemail = UserDAO.getInstance().getUserByEmail(email);
-            if(checkemail != null){
+            if(checkemail != null && !user.getEmail().equals(checkemail.getEmail())){
                 String msg="Email already exist";
                 request.setAttribute("error", msg);
                 request.getRequestDispatcher("ChangeProfile.jsp").forward(request, response);
@@ -58,6 +58,7 @@ public class ChangeController extends HttpServlet {
                     String msg="Successfully change profile";
                     request.setAttribute("msg", msg);
                     request.getRequestDispatcher("ChangeProfile.jsp").forward(request, response);
+                    
                 }else{
                     String msg="Failed change profile";
                     request.setAttribute("error", msg);
@@ -68,12 +69,10 @@ public class ChangeController extends HttpServlet {
                 request.setAttribute("error", msg);
                 request.getRequestDispatcher("ChangeProfile.jsp").forward(request, response);
             }
-            
         } catch (Exception e) {
             e.getMessage();
-        }finally{
-            response.sendRedirect("home.jsp");
         }
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
